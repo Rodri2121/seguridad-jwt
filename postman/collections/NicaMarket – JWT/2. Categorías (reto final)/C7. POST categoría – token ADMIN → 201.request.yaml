@@ -1,0 +1,24 @@
+$kind: http-request
+description: "ADMIN con datos válidos: se crea (201). Guarda el id en categoriaCreada."
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Lácteos",
+      "descripcion": "Leche, queso y derivados"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenAdmin}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código 201", () => pm.response.to.have.status(201));
+      pm.collectionVariables.set("categoriaCreada", pm.response.json().id);
+    language: text/javascript
+order: 7000

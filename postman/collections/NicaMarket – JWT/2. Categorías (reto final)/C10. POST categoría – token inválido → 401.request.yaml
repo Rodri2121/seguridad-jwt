@@ -1,0 +1,29 @@
+$kind: http-request
+description: "Firma alterada: el token no es válido; 401 aunque el cuerpo sea correcto."
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Lácteos",
+      "descripcion": "Leche, queso y derivados"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenModificado}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Altera un carácter de la firma del token USER para invalidarlo.
+      const t = pm.collectionVariables.get('tokenUser') || '';
+      const ult = t.slice(-1) === 'A' ? 'B' : 'A';
+      pm.collectionVariables.set('tokenModificado', t.slice(0, -1) + ult);
+    language: text/javascript
+  - type: afterResponse
+    code: pm.test("Código 401", () => pm.response.to.have.status(401));
+    language: text/javascript
+order: 10000

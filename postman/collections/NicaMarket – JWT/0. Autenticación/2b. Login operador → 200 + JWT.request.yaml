@@ -1,0 +1,24 @@
+$kind: http-request
+description: "Credenciales válidas de operador: se emite un JWT firmado (HS256) que vence en 30 minutos. Se guarda en tokenUser."
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "operador",
+      "password": "Operador123!"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código 200", () => pm.response.to.have.status(200));
+      const t = pm.response.json().token;
+      pm.test("Devuelve token", () => pm.expect(t).to.be.a("string"));
+      pm.collectionVariables.set("tokenUser", t);
+    language: text/javascript
+order: 3000

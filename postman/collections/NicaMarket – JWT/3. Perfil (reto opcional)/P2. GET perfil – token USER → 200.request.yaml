@@ -1,0 +1,15 @@
+$kind: http-request
+description: Devuelve el subject y el claim roles del JWT.
+url: "{{baseUrl}}/api/auth/perfil"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenUser}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Código 200", () => pm.response.to.have.status(200));
+      pm.test("Usuario operador", () => pm.expect(pm.response.json().usuario).to.eql("operador"));
+    language: text/javascript
+order: 2000

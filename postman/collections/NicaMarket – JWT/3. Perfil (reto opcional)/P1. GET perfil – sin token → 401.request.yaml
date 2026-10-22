@@ -1,0 +1,11 @@
+$kind: http-request
+description: "/api/auth/perfil exige autenticación: no acepta solicitudes anónimas."
+url: "{{baseUrl}}/api/auth/perfil"
+method: GET
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: pm.test("Código 401", () => pm.response.to.have.status(401));
+    language: text/javascript
+order: 1000

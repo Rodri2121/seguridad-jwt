@@ -1,0 +1,20 @@
+$kind: http-request
+description: AuthenticationManager lanza BadCredentialsException; ApiExceptionHandler responde 401.
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "admin",
+      "password": "incorrecta"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: pm.test("Código 401", () => pm.response.to.have.status(401));
+    language: text/javascript
+order: 4000

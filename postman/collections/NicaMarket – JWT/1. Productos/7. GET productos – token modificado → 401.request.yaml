@@ -1,0 +1,20 @@
+$kind: http-request
+description: "Se cambia un carácter de la firma: JwtDecoder recalcula el HMAC, no coincide y rechaza el token (401)."
+url: "{{baseUrl}}/api/productos"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenModificado}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Altera un carácter de la firma del token USER para invalidarlo.
+      const t = pm.collectionVariables.get('tokenUser') || '';
+      const ult = t.slice(-1) === 'A' ? 'B' : 'A';
+      pm.collectionVariables.set('tokenModificado', t.slice(0, -1) + ult);
+    language: text/javascript
+  - type: afterResponse
+    code: pm.test("Código 401", () => pm.response.to.have.status(401));
+    language: text/javascript
+order: 4000

@@ -1,0 +1,13 @@
+$kind: http-request
+description: GET permitido a USER y ADMIN.
+url: "{{baseUrl}}/api/categorias"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenUser}}"
+scripts:
+  - type: afterResponse
+    code: pm.test("Código 200", () => pm.response.to.have.status(200));
+    language: text/javascript
+order: 2000

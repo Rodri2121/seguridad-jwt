@@ -1,0 +1,22 @@
+$kind: http-request
+description: "USER autenticado sin rol ADMIN: 403."
+url: "{{baseUrl}}/api/categorias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombre": "Lácteos",
+      "descripcion": "Leche, queso y derivados"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenUser}}"
+scripts:
+  - type: afterResponse
+    code: pm.test("Código 403", () => pm.response.to.have.status(403));
+    language: text/javascript
+order: 4000

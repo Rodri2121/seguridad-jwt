@@ -1,0 +1,11 @@
+$kind: collection
+description: |-
+  Pruebas de la Práctica guiada n.º 9 (Spring Security + JWT).
+
+  Ejecute primero la carpeta 0. Autenticación: guarda tokenAdmin y tokenUser en variables de la colección. Luego ejecute el resto en orden (Collection Runner).
+variables:
+  baseUrl: http://localhost:8080
+  tokenAdmin: ""
+  tokenUser: ""
+  tokenModificado: ""
+  categoriaCreada: ""

@@ -1,0 +1,13 @@
+$kind: http-request
+description: "USER autenticado sin rol ADMIN: 403."
+url: "{{baseUrl}}/api/categorias/1"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: "{{tokenUser}}"
+scripts:
+  - type: afterResponse
+    code: pm.test("Código 403", () => pm.response.to.have.status(403));
+    language: text/javascript
+order: 6000
