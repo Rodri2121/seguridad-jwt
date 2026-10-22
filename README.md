@@ -94,6 +94,12 @@ Cada solicitud incluye una prueba del código esperado y una descripción de por
 **401 vs 403:** 401 significa que la API no sabe quién eres (sin token, token alterado o vencido);
 403 significa que sabe quién eres, pero tu rol no tiene permiso para esa operación.
 
+### Evidencias
+
+- `docs/capturas/`: cinco capturas de Postman (200, 401, 200, 403, 403); el token del login aparece
+  oculto.
+- `docs/preguntas-cierre.pdf`: respuestas a las preguntas de cierre.
+
 ## 6. Estructura
 
 ```
